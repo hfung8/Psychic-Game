@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<HTML>
+<body>
+	<h1>The Psychic Game</h1><br>
+	<p>Guess what letter I'm thinking of</p><br>
+	<p>Wins#: <span id="wins">0</span></p>
+	<p>Losses#: <span id="losses">0</span></p>
+	<p>Guesses#: <span id="guesses"></span></p>
+	<p id="higherorlower"></p>
+	
+
+	<script type="text/javascript">
+
+	// Need to make a choice for the user 
+	// Make the computer take a random letter as a choice 
+	// capture the choice 
+	// 
+	// display the result to the user 
+
+	var options = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+	var lettertoguess;
+	var lettersGuessed = [];
+	var gameOver = false;
+	var wins = 0;
+	var losses = 0;
+
+	// The initgame function sets up the game for the player 
+	// The lettertoguess variable is the random letter that is chosen from the options array and is stored in the lettertoguess variable 
+	// Once a key is pushed the keyup function is started
+
+	function initgame(){
+		var letterIndex = Math.floor(Math.random()*options.length);
+			lettertoguess = options[letterIndex];
+		document.querySelector("#guesses").innerHTML = "";
+		document.querySelector("#higherorlower").innerHTML = "";
+		document.querySelector("#wins").innerHTML = wins;
+		document.querySelector("#losses").innerHTML = losses;
+		gameOver = false;
+	}	
+	window.addEventListener("keyup",eventKeyPressed,true);
+	// The eventKeypressed function stores the users letter pressed value
+	// An additional guess is stored to guess variable 
+	// The chosen letter is pushed to the letterpressed variable through the letterguessed variable. 
+
+	function eventKeyPressed (e){
+		if (!gameOver){
+			var letterPressed = String.fromCharCode(e.keyCode);
+			letterPressed = letterPressed.toLowerCase();
+			lettersGuessed.push(letterPressed);
+		console.log(letterPressed);
+		document.querySelector("#guesses").innerHTML += letterPressed;
+		if (letterPressed === lettertoguess){
+			gameOver = true;
+			wins++;
+			initgame();
+			}
+		
+
+		else {
+			letterIndex = options.indexOf(lettertoguess);
+			guessIndex = options.indexOf(letterPressed);
+			var higherorlower;
+			if (guessIndex < 0) {
+			higherorlower = "That is not a letter";
+		} else if (guessIndex > letterIndex) {
+			higherorlower = "Lower";
+		} else {
+			higherorlower = "Higher";
+		}
+		document.querySelector("#higherorlower").innerHTML = higherorlower;
+		}
+	}
+	}	
+	initgame();
+
+	</script>
+	
+	</body>
+	</HTML>	
