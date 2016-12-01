@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<HTML>
+<head>
+<title>Hangman game</title>
+</head>
+
+<p><span id="press">Press any key to get started!</span></p>
+<p>Wins: </p>
+<p><span id="wins"></span></p>
+<p>Guesses: </p>
+<p><span id="guesses"></span></p>
+<p>Lossses: </p>
+<p><span id="losses"></span></p>
+<p>Guesses Left: </p>
+<p><span id="guessesLeft"></span></p>
+
+
+<script>
+
+var options = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var guessesLeft = 9;
+var guessedLetters = [];
+var wins = 0;
+var losses = 0; 
+var letterToGuess;
+var letterIndex;
+
+// We require a few functions to complete the game. First a function to update a new letterToGuess. Second a function to update guessesLeft. Third a function to update guessesSoFar. 
+
+// Next we need a reset function in order to reset the game's variables. 
+
+// Then we need a function to capture the onkeyup letter that is pressed. 
+	
+	function updateletterToGuess (){
+		letterIndex = Math.floor(Math.random()*options.length);
+		letterToGuess = options[letterIndex]
+	}
+
+	function updateguessesLeft (){
+		document.querySelector("#guessesLeft").innerHTML = guessesLeft;
+	}
+
+	function updateguessesSoFar(){
+		document.querySelector("#guesses").innerHTML = guessedLetters.join(", ");
+	}
+
+	function reset (){
+		guessesLeft = 9;
+		guessedLetters = [];
+		updateletterToGuess();
+		updateguessesLeft();
+		updateguessesSoFar();
+	}
+
+	updateletterToGuess();
+	updateguessesLeft();
+
+	document.onkeyup = function(event){
+	var letterPressed = String.fromCharCode(event.keyCode).toLowerCase();
+	guessedLetters.push(letterPressed);
+
+	// guesses left goes down once a key is pressed 
+
+	guessesLeft--;
+
+	
+	// update the gueeseSoFar and the guessesLeft functions 
+
+	updateguessesSoFar();
+	updateguessesLeft();
+
+	// set up the if conditions 
+
+	if (letterPressed === letterToGuess){
+		wins++;
+		document.querySelector("#wins").innerHTML = wins;
+		reset ();
+	}
+
+	if (guessesLeft === 0){
+		losses++;
+		document.querySelector("#losses").innerHTML = losses;
+		reset ();
+	}
+}
+
+// This function is started to reset the game. 
+
+</script>
+</HTML>
